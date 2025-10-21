@@ -1,0 +1,1887 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>한글 수화 학습 - 손가락으로 이름 배우기</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'Paperozi';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-1Thin.woff2') format('woff2');
+            font-weight: 100;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Paperozi';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-2ExtraLight.woff2') format('woff2');
+            font-weight: 200;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Paperozi';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-3Light.woff2') format('woff2');
+            font-weight: 300;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Paperozi';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-4Regular.woff2') format('woff2');
+            font-weight: 400;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Paperozi';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-5Medium.woff2') format('woff2');
+            font-weight: 500;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Paperozi';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-6SemiBold.woff2') format('woff2');
+            font-weight: 600;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Paperozi';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-7Bold.woff2') format('woff2');
+            font-weight: 700;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Paperozi';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-8ExtraBold.woff2') format('woff2');
+            font-weight: 800;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Paperozi';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-9Black.woff2') format('woff2');
+            font-weight: 900;
+            font-display: swap;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Noto Sans KR', sans-serif; 
+            background: #ffffff;
+            min-height: 100vh;
+            color: #333;
+        }
+        .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
+        .header { 
+            text-align: center; 
+            margin-bottom: 40px; 
+            color: #2c3e50;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .header h1 { 
+            font-family: 'Paperozi', 'Noto Sans KR', sans-serif;
+            font-size: 3.5em; 
+            margin-bottom: 15px; 
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .header p { 
+            font-family: 'Paperozi', 'Noto Sans KR', sans-serif;
+            font-size: 1.3em; 
+            opacity: 0.8; 
+            font-weight: 300;
+        }
+        .main-content { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 40px; 
+            margin-bottom: 40px; 
+        }
+        .left-panel, .right-panel { 
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 25px; 
+            padding: 35px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+            transition: all 0.3s ease;
+        }
+        .left-panel:hover, .right-panel:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.3);
+        }
+        .video-container { position: relative; display: inline-block; margin-bottom: 20px; border-radius: 15px; overflow: hidden;  border: 3px solid #e0e0e0; }
+        #video { width: 100%; max-width: 500px; height: auto; background: #000; transform: scaleX(-1); }
+        #canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; transform: scaleX(-1); }
+        .controls { text-align: center; margin: 20px 0; }
+        button { 
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #2c3e50; 
+            padding: 15px 30px; 
+            margin: 0 10px; 
+            border-radius: 25px; 
+            cursor: pointer; 
+            font-size: 16px; 
+            font-weight: 600; 
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px 0 rgba(31, 38, 135, 0.2);
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        button:hover { 
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px); 
+            box-shadow: 0 8px 25px 0 rgba(31, 38, 135, 0.3);
+        }
+        button:disabled { 
+            background: rgba(189, 195, 199, 0.3); 
+            cursor: not-allowed; 
+            transform: none; 
+            opacity: 0.6;
+        }
+        .input-section { 
+            margin-bottom: 30px; 
+            transition: all 0.5s ease;
+        }
+        .input-section h3 { 
+            font-family: 'Paperozi', 'Noto Sans KR', sans-serif;
+            color: #2c3e50; 
+            margin-bottom: 20px; 
+            font-size: 1.6em; 
+            font-weight: 500;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        .name-input { 
+            width: 100%; 
+            padding: 18px 20px; 
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 15px; 
+            font-size: 18px; 
+            margin-bottom: 20px; 
+            text-align: center;
+            font-family: 'Noto Sans KR', sans-serif;
+            color: #2c3e50;
+            box-shadow: 0 4px 15px 0 rgba(31, 38, 135, 0.1);
+            transition: all 0.3s ease;
+        }
+        .name-input:focus { 
+            outline: none; 
+            border-color: rgba(102, 126, 234, 0.6);
+            background: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 8px 25px 0 rgba(31, 38, 135, 0.2);
+        }
+        .name-input::placeholder {
+            color: rgba(44, 62, 80, 0.6);
+            font-weight: 400;
+        }
+    
+        .hand-option-section { 
+            margin-bottom: 25px; 
+            text-align: center; 
+            transition: all 0.5s ease;
+        }
+        .hand-option-section h3 { 
+            font-family: 'Paperozi', 'Noto Sans KR', sans-serif;
+            color: #2c3e50; 
+            margin-bottom: 20px; 
+            font-size: 1.6em; 
+            font-weight: 500;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        .hand-option-section label { 
+            margin: 0 15px; 
+            font-size: 16px; 
+            cursor: pointer;
+            font-weight: 500;
+            color: #2c3e50;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        .hand-option-section label:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        .hand-option-section input[type="radio"] {
+            margin-right: 8px;
+            accent-color: #667eea;
+        }
+        
+        /* 학습 시작 후 레이아웃 변경 */
+        .learning-started .input-section,
+        .learning-started .hand-option-section {
+            order: 3; /* 아래로 이동 */
+            margin-bottom: 15px;
+        }
+        
+        .learning-started .learning-section {
+            order: 1; /* 위로 이동 */
+        }
+        
+        .learning-started .sign-guide {
+            order: 2; /* 두 번째로 이동 */
+        }
+        
+        .right-panel {
+            display: flex;
+            flex-direction: column;
+        }
+        .decomposed-letters { 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 15px; 
+            justify-content: center; 
+            margin: 25px 0; 
+        }
+        .letter-card { 
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px; 
+            padding: 20px; 
+            text-align: center; 
+            min-width: 70px; 
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px 0 rgba(31, 38, 135, 0.05);
+        }
+        .letter-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px 0 rgba(31, 38, 135, 0.2);
+        }
+        .letter-card.current { 
+            background: rgba(33, 150, 243, 0.3);
+            border-color: rgba(33, 150, 243, 0.6);
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px 0 rgba(33, 150, 243, 0.3);
+        }
+        .letter-card.completed { 
+            background: rgba(76, 175, 80, 0.3);
+            border-color: rgba(76, 175, 80, 0.6);
+        }
+        .letter-card h4 { 
+            font-family: 'Paperozi', 'Noto Sans KR', sans-serif;
+            font-size: 1.3em; 
+            margin-bottom: 8px; 
+            font-weight: 500;
+            color: #2c3e50;
+        }
+        .letter-card p { 
+            font-family: 'Paperozi', 'Noto Sans KR', sans-serif;
+            font-size: 0.9em; 
+            color: rgba(44, 62, 80, 0.7);
+            font-weight: 300;
+        }
+        .learning-section { 
+            margin-top: 35px; 
+        }
+        .current-letter { 
+            text-align: center; 
+            margin: 25px 0; 
+        }
+        .current-letter h2 { 
+            font-family: 'Paperozi', 'Noto Sans KR', sans-serif;
+            font-size: 3.5em; 
+            color: #e74c3c; 
+            margin-bottom: 15px; 
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .current-letter p { 
+            font-family: 'Paperozi', 'Noto Sans KR', sans-serif;
+            font-size: 1.3em; 
+            color: rgba(44, 62, 80, 0.8);
+            font-weight: 300;
+        }
+        .sign-guide { 
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px; 
+            padding: 25px; 
+            margin: 25px 0; 
+            box-shadow: 0 4px 15px 0 rgba(31, 38, 135, 0.05);
+        }
+        .sign-guide h4 { 
+            font-family: 'Paperozi', 'Noto Sans KR', sans-serif;
+            color: #2c3e50; 
+            margin-bottom: 20px; 
+            font-size: 1.4em;
+            font-weight: 500;
+        }
+        .sign-guide ul { 
+            list-style: none; 
+            padding: 0; 
+        }
+        .sign-guide li { 
+            font-family: 'Paperozi', 'Noto Sans KR', sans-serif;
+            padding: 12px 0; 
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            font-weight: 300;
+            color: #2c3e50;
+        }
+        .sign-guide li:last-child { 
+            border-bottom: none; 
+        }
+        .feedback-section { 
+            margin: 25px 0; 
+            text-align: center; 
+            height: 60px; 
+        }
+        .feedback { 
+            font-family: 'Paperozi', 'Noto Sans KR', sans-serif;
+            padding: 18px 25px; 
+            border-radius: 15px; 
+            font-size: 1.2em; 
+            font-weight: 300; 
+            margin: 15px 0;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 15px 0 rgba(31, 38, 135, 0.2);
+        }
+        .feedback.correct { 
+            background: rgba(212, 237, 218, 0.8);
+            color: #155724; 
+            border-color: rgba(195, 230, 203, 0.6);
+        }
+        .feedback.incorrect { 
+            background: rgba(248, 215, 218, 0.8);
+            color: #721c24; 
+            border-color: rgba(245, 198, 203, 0.6);
+        }
+        .gesture-status { 
+            font-family: 'Paperozi', 'Noto Sans KR', sans-serif;
+            background: rgba(227, 242, 253, 0.8);
+            color: #1565c0; 
+            border: 1px solid rgba(187, 222, 251, 0.6);
+            padding: 15px; 
+            border-radius: 15px; 
+            margin: 15px 0; 
+            text-align: center; 
+            font-style: italic;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            font-weight: 300;
+        }
+        .sign-example { 
+            margin-top: 25px; 
+            text-align: center; 
+        }
+        .completion-section { 
+            background: rgba(232, 245, 232, 0.3);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(76, 175, 80, 0.2);
+            border-radius: 20px; 
+            padding: 35px; 
+            margin: 25px 0; 
+            text-align: center;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+        }
+        .completion-section h3 { 
+            font-family: 'Paperozi', 'Noto Sans KR', sans-serif;
+            color: #2e7d32; 
+            margin-bottom: 25px; 
+            font-size: 2em;
+            font-weight: 700;
+        }
+        .completion-buttons { 
+            display: flex; 
+            gap: 20px; 
+            justify-content: center; 
+            margin-top: 25px; 
+        }
+        .completion-btn { 
+            font-family: 'Paperozi', 'Noto Sans KR', sans-serif;
+            padding: 15px 30px; 
+            border: none; 
+            border-radius: 15px; 
+            font-size: 1.2em; 
+            font-weight: 300; 
+            cursor: pointer; 
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 15px 0 rgba(31, 38, 135, 0.2);
+        }
+        .review-btn { 
+            background: rgba(33, 150, 243, 0.8);
+            color: white; 
+        }
+        .review-btn:hover { 
+            background: rgba(25, 118, 210, 0.9);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px 0 rgba(33, 150, 243, 0.4);
+        }
+        .home-btn { 
+            background: rgba(255, 152, 0, 0.8);
+            color: white; 
+        }
+        .home-btn:hover { 
+            background: rgba(245, 124, 0, 0.9);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px 0 rgba(255, 152, 0, 0.4);
+        }
+        .sign-example h5 { 
+            font-family: 'Paperozi', 'Noto Sans KR', sans-serif;
+            color: #2c3e50; 
+            margin-bottom: 20px; 
+            font-size: 1.4em;
+            font-weight: 500;
+        }
+        .sign-image { 
+            width: 220px; 
+            height: 220px; 
+            margin: 0 auto; 
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 1.6em; 
+            color: rgba(44, 62, 80, 0.6);
+            position: relative; 
+            overflow: hidden;
+            box-shadow: 0 8px 25px 0 rgba(31, 38, 135, 0.1);
+            transition: all 0.3s ease;
+        }
+        .sign-image:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px 0 rgba(31, 38, 135, 0.3);
+        }
+        .sign-image img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: contain; 
+            border-radius: 20px;
+        }
+        .hidden { display: none; }
+        .fade-in { animation: fadeIn 0.6s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* 배경 수화 이미지 애니메이션 */
+        .background-signs {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .background-sign {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .background-sign img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 15px;
+        }
+        
+        .background-sign.fade-in {
+            opacity: 1.0;
+        }
+        
+        .background-sign.fade-out {
+            opacity: 0;
+        }
+        
+        @media (max-width: 768px) {
+            .main-content { grid-template-columns: 1fr; }
+            .header h1 { font-size: 2em; }
+            .background-sign {
+                width: 60px;
+                height: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 배경 수화 이미지 컨테이너 -->
+    <div id="backgroundSigns" class="background-signs"></div>
+    
+    <div class="container">
+        <div class="header">
+            <h1> 한글 수화 학습</h1>
+            <p>손가락으로 나의 이름을 배워보세요!</p>
+        </div>
+
+        <div class="main-content">
+            <div class="left-panel">
+                <h3>실시간 수화 인식</h3>
+                <div class="video-container">
+                    <video id="video" autoplay muted playsinline></video>
+                    <canvas id="canvas"></canvas>
+                </div>
+                <div class="controls">
+                    <button id="startBtn">카메라 시작</button>
+                    <button id="stopBtn" disabled>카메라 중지</button>
+                    <button id="practiceBtn" disabled>연습 모드</button>
+                </div>
+                <div class="feedback-section">
+                    <div id="feedback" class="feedback hidden"></div>
+                    <div id="gestureStatus" class="gesture-status hidden"><p>손을 카메라 앞에 올려주세요</p></div>
+                </div>
+                <div class="current-letter">
+                    <h2 id="currentLetterDisplay">-</h2>
+                    <p id="currentLetterName">학습할 자모음을 선택하세요</p>
+                </div>
+            </div>
+
+            <div class="right-panel">
+                <div class="input-section">
+                    <h3>이름 입력</h3>
+                    <input type="text" id="nameInput" class="name-input" placeholder="예:김철수" maxlength="10">
+                    <button id="analyzeBtn" disabled>이름 분석하기</button>
+                </div>
+
+                <div class="hand-option-section">
+                    <h3>학습할 손 선택</h3>
+                    <label><input type="radio" name="hand" value="right" checked> 오른손</label>
+                    <label><input type="radio" name="hand" value="left"> 왼손</label>
+                </div>
+
+                <div id="decomposedSection" class="hidden">
+                    <h3>자모음 분해</h3>
+                    <div id="decomposedLetters" class="decomposed-letters"></div>
+                </div>
+
+                <div class="learning-section">
+                    <h3>학습 진행</h3>
+                    <div class="sign-guide">
+                        <h4> 현재 자모음 수화 방법</h4>
+                        <div id="signInstructions">이름을 입력하고 분석하기 버튼을 눌러주세요.</div>
+                        <div id="signExample" class="sign-example hidden">
+                            <h5>수화 예시</h5>
+                            <div id="signImage" class="sign-image">
+                                <!-- 수화 이미지가 여기에 표시됩니다 -->
+                                <!-- 이미지 경로: images/signs/[자모음].png -->
+                                <img id="signImageSrc" src="" alt="수화 이미지" style="display: none;">
+                                <div id="signImagePlaceholder" style="display: flex; align-items: center; justify-content: center; height: 100%; color: #888; font-size: 1.2em;">
+                                    이미지 준비 중...
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 학습 완료 섹션 -->
+                <div id="completionSection" class="completion-section hidden">
+                    <h3>🎉 학습 완료!</h3>
+                    <p><strong id="completedName"></strong>님의 이름을 모두 학습하셨습니다!</p>
+                    <div class="completion-buttons">
+                        <button id="reviewBtn" class="completion-btn review-btn">복습하기</button>
+                        <button id="homeBtn" class="completion-btn home-btn">처음으로</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+<script>
+    class KoreanSignLanguageLearner {
+        constructor() {
+           
+            this.video = document.getElementById('video');
+            this.canvas = document.getElementById('canvas');
+            this.ctx = this.canvas.getContext('2d');
+            this.startBtn = document.getElementById('startBtn');
+            this.stopBtn = document.getElementById('stopBtn');
+            this.practiceBtn = document.getElementById('practiceBtn');
+            this.nameInput = document.getElementById('nameInput');
+            this.analyzeBtn = document.getElementById('analyzeBtn');
+            this.handOptionRadios = document.querySelectorAll('input[name="hand"]');
+
+            this.hands = null;
+            this.camera = null;
+            this.isRunning = false;
+            this.isPracticing = false;
+            
+            this.decomposedSyllables = [];
+            this.currentSyllableIndex = 0;
+            this.currentJamoTypeIndex = 0; 
+            this.learnedLetters = new Set();
+            this.practiceCount = 0;
+            this.correctCount = 0;
+            this.dominantHand = 'right';
+            this.lastGestureTime = 0;
+            this.gestureDebounceTime = 1000;
+            this.isProcessingCorrect = false; // 정답 처리 중인지 확인하는 플래그
+            
+            // 배경 애니메이션 관련 변수
+            this.backgroundSignsContainer = document.getElementById('backgroundSigns');
+            this.backgroundAnimationInterval = null;
+            this.backgroundSigns = [];
+            this.availableSigns = ['ㄱ', 'ㄴ', 'ㄷ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅅ', 'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ', 'ㅏ', 'ㅐ', 'ㅑ', 'ㅓ', 'ㅔ', 'ㅕ', 'ㅖ', 'ㅗ', 'ㅚ', 'ㅛ', 'ㅜ', 'ㅟ', 'ㅠ', 'ㅡ', 'ㅢ', 'ㅣ'];
+            
+            this.signPatterns = this.initializeSignPatterns();
+            
+            this.initializeMediaPipe();
+            this.setupEventListeners();
+        }
+
+        initializeSignPatterns() {
+            /**
+             * 각 자모음별 수화 패턴 정의
+             * 
+             * 각 패턴은 다음 요소들을 포함합니다:
+             * - finger states: 각 손가락의 상태 (extended: 펴짐, bent: 구부러짐)
+             * - palmDirection: 손바닥 방향 요구사항
+             *   - 'forward': 손바닥이 카메라를 향함 (정면)
+             *   - 'backward': 손등이 카메라를 향함 (후면)
+             *   - 'side': 손의 옆면이 카메라를 향함 (측면)
+             *   - 'up': 손바닥이 위를 향함
+             *   - 'down': 손바닥이 아래를 향함
+             *   - 'any': 방향 제한 없음
+             * - relativePosition: 손가락들의 상대적 위치 관계
+             *   - 'straight': 손가락들이 일직선상에 배치
+             *   - 'spread': 손가락들이 벌어져 있음
+             *   - 'closed': 손가락들이 모여있음
+             *   - 'specific': 특정 패턴 (상세 설명 필요)
+             * - description: 사용자에게 보여줄 설명
+             * 
+             * 방향 판별 작동 방식:
+             * 1. calculatePalmNormal() 함수로 손바닥의 법선벡터 계산
+             * 2. 법선벡터의 x, y, z 성분으로 방향 판별
+             * 3. 손가락 상대 위치는 landmarks 간 거리와 각도로 분석
+             */
+            return {
+                'ㄱ': { 
+                    thumb: 'extended', 
+                    index: 'bent', 
+                    middle: 'extended', 
+                    ring: 'extended', 
+                    pinky: 'extended', 
+                    palmDirection: 'backward',  
+                    relativePosition: 'specific',  // 검지와 엄지만 펴고 나머지는 구부림
+                    description: '검지와 엄지를 펴고 검지로 아래를 가리킵니다.' 
+                },
+                'ㄴ': { 
+                    thumb: 'extended', 
+                    index: 'extended', 
+                    middle: 'extended', 
+                    ring: 'extended', 
+                    pinky: 'extended', 
+                    palmDirection: 'backward',  
+                    relativePosition: 'specific',  
+                    description: '검지와 엄지를 펴고 옆을 가리킵니다.' 
+                },
+                'ㄷ': { 
+                    thumb: 'bent', 
+                    index: 'extended', 
+                    middle: 'extended', 
+                    ring: 'extended', 
+                    pinky: 'extended', 
+                    palmDirection: 'backward',  
+                    relativePosition: 'spread', 
+                    description: '검지, 중지를 펴고 손등이 보이게 옆을 가리킵니다' 
+                },
+                'ㄹ': { 
+                    thumb: 'bent', 
+                    index: 'extended', 
+                    middle: 'extended', 
+                    ring: 'extended', 
+                    pinky: 'extended', 
+                    palmDirection: 'backward', 
+                    relativePosition: 'spread',  
+                    description: '검지와 중지, 약지를 펴고 손등이 보이게 옆을 가리킵니다.' 
+                },
+                'ㅁ': { 
+                    thumb: 'bent', 
+                    index: 'extended', 
+                    middle: 'extended', 
+                    ring: 'bent', 
+                    pinky: 'bent', 
+                    palmDirection: 'forward',  // 손바닥이 카메라를 향해야 함
+                    relativePosition: 'closed', 
+                    description: '엄지를 구부리고 나머지 손가락들을 펼칩니다.' 
+                },
+                'ㅂ': { 
+                    thumb: 'bent', 
+                    index: 'extended', 
+                    middle: 'extended', 
+                    ring: 'extended', 
+                    pinky: 'extended', 
+                    palmDirection: 'forward',  // 손바닥이 카메라를 향해야 함
+                    relativePosition: 'spread',  // 모든 손가락이 펼쳐짐
+                    description: '손바닥이 앞을 향하게 하고 엄지를 제외한 손가락을 펼칩니다.' 
+                },
+                'ㅅ': { 
+                    thumb: 'bent', 
+                    index: 'bent', 
+                    middle: 'bent', 
+                    ring: 'extended', 
+                    pinky: 'extended', 
+                    palmDirection: 'backward',  
+                    relativePosition: 'spread',  // 검지와 중지만 펴고 나머지는 구부림
+                    description: '검지와 중지만 펴고 손등이 보이게 아래쪽을 가리킵니다.' 
+                },
+                'ㅇ': { 
+                    thumb: 'extended', 
+                    index: 'extended', 
+                    middle: 'extended', 
+                    ring: 'extended', 
+                    pinky: 'extended', 
+                    palmDirection: 'side', 
+                    relativePosition: 'specific',  // 엄지와 검지 끝이 만나 동그라미 형성
+                    description: '엄지와 검지 끝을 붙여 동그라미를 만듭니다. OK사인처럼!' 
+                },
+                'ㅈ': { 
+                    thumb: 'extended', 
+                    index: 'bent', 
+                    middle: 'bent', 
+                    ring: 'extended', 
+                    pinky: 'extended', 
+                    palmDirection: 'backward',  
+                    relativePosition: 'spread',  
+                    description: '검지, 중지, 엄지를 쫙 펴고 손등이 보이게 아래를 가리킵니다.' 
+                },
+                'ㅊ': { 
+                    thumb: 'extended', 
+                    index: 'bent', 
+                    middle: 'bent', 
+                    ring: 'bent', 
+                    pinky: 'extended', 
+                    palmDirection: 'backward',  // 손바닥이 카메라를 향해야 함
+                    relativePosition: 'spread',  
+                    description: '검지,중지,엄지,약지 손가락을 쫙 펴고 손등이 보이게 아래를 가리킵니다.' 
+                },
+                'ㅋ': { 
+                    thumb: 'extended', 
+                    index: 'extended', 
+                    middle: 'bent', 
+                    ring: 'extended', 
+                    pinky: 'extended', 
+                    palmDirection: 'backward',  
+                    relativePosition: 'specific', 
+                    description: '엄지와 중지를 펴고 손등이 보이게 아래를 가리킵니다.' 
+                },
+                'ㅌ': { 
+                    thumb: 'bent', 
+                    index: 'extended', 
+                    middle: 'extended', 
+                    ring: 'extended', 
+                    pinky: 'extended', 
+                    palmDirection: 'backward',  
+                    relativePosition: 'specific', 
+                    description: '검지, 중지, 약지를 펴고 중지와 약지는 붙인 뒤 손등이 보이게 옆을 가리킵니다.' 
+                },
+                'ㅍ': { 
+                    thumb: 'extended', 
+                    index: 'extended', 
+                    middle: 'extended', 
+                    ring: 'extended', 
+                    pinky: 'extended', 
+                    palmDirection: 'forward',  // 손바닥이 카메라를 향해야 함
+                    relativePosition: 'specific',  
+                    description: '모든 손가락을 반만 접고 손바닥이 앞을 향하게 합니다.' 
+                },
+                'ㅎ': { 
+                    thumb: 'extended', 
+                    index: 'extended', 
+                    middle: 'extended', 
+                    ring: 'extended', 
+                    pinky: 'extended', 
+                    palmDirection: 'any',  
+                    relativePosition: 'specific',  
+                    description: '엄지만 펴고 엄지가 위를 향하고, 손등은 옆을 보게 합니다 (엄지척 자세)).' 
+                },
+                'ㅏ': { 
+                    thumb: 'bent', 
+                    index: 'extended', 
+                    middle: 'bent', 
+                    ring: 'bent', 
+                    pinky: 'bent', 
+                    palmDirection: 'forward', 
+                    relativePosition: 'specific',  
+                    description: '검지만 펴고 손바닥이 앞을 향하게 천장을 가리킵니다.' 
+                },
+                'ㅑ': { 
+                    thumb: 'bent', 
+                    index: 'extended', 
+                    middle: 'extended', 
+                    ring: 'bent', 
+                    pinky: 'bent', 
+                    palmDirection: 'forward',  
+                    relativePosition: 'closed',  
+                    description: '검지와 중지를 펴고 손바닥이 앞을 향하게 천장을 가리킵니다.' 
+                },
+                'ㅓ': { 
+                    thumb: 'extended', 
+                    index: 'extended', 
+                    middle: 'extended', 
+                    ring: 'extended', 
+                    pinky: 'extended', 
+                    palmDirection: 'side',  // 손의 옆면이 카메라를 향해야 함
+                    relativePosition: 'specific',  // 검지만 펴고 옆을 가리킴
+                    description: '검지를 펴고, 손등이 옆을 향한 채로 앞을 가리킵니다.' 
+                },
+                'ㅕ': { 
+                    thumb: 'extended', 
+                    index: 'extended', 
+                    middle: 'extended', 
+                    ring: 'extended', 
+                    pinky: 'extended', 
+                    palmDirection: 'side',  // 손의 옆면이 카메라를 향해야 함
+                    relativePosition: '',  
+                    description: '검지와 중지를 펴고 손등이 옆을 향한 채로 앞을 가리킵니다.' 
+                },
+                'ㅗ': { 
+                    thumb: 'bent', 
+                    index: 'extended', 
+                    middle: 'bent', 
+                    ring: 'bent', 
+                    pinky: 'bent', 
+                    palmDirection: 'backward',  
+                    relativePosition: 'specific',  // 검지만 펴고 나머지는 구부림
+                    description: '검지를 펴고 손등이 보이게 천장을 가리킵니다.' 
+                },
+                'ㅛ': { 
+                    thumb: 'bent', 
+                    index: 'extended', 
+                    middle: 'extended', 
+                    ring: 'bent', 
+                    pinky: 'bent', 
+                    palmDirection: 'backward',  // 손바닥이 카메라를 향해야 함
+                     relativePosition: 'closed',  // 검지와 중지만 펴고 나머지는 구부림
+                    description: '검지와 중지를 펴고 손등이 보이게 천장을 가리킵니다.' 
+                },
+                'ㅜ': { 
+                    thumb: 'bent', 
+                    index: 'bent', 
+                    middle: 'extended', 
+                    ring: 'extended', 
+                    pinky: 'extended', 
+                    palmDirection: 'backward',  
+                    relativePosition: 'specific',  // 검지만 펴고 아래를 가리킴
+                    description: '검지를 펴고 손등이 보이게 아래를 가리킵니다.' 
+                },
+                'ㅠ': { 
+                    thumb: 'bent', 
+                    index: 'bent', 
+                    middle: 'bent', 
+                    ring: 'extended', 
+                    pinky: 'extended', 
+                    palmDirection: 'backward',  
+                    relativePosition: 'colsed',  // 검지와 중지를 펴고 아래를 가리킴
+                    description: '검지와 중지를 붙인 상태로 펴고 손등이 보이게 아래를 가리킵니다.' 
+                },
+                'ㅡ': { 
+                    thumb: 'bent', 
+                    index: 'extended', 
+                    middle: 'extended', 
+                    ring: 'extended', 
+                    pinky: 'extended', 
+                    palmDirection: 'backward',  
+                    relativePosition: 'specific',  // 검지만 펴고 옆을 가리킴
+                    description: '검지를 펴고 아래를 가리킵니다.' 
+                },
+                'ㅣ': { 
+                    thumb: 'bent', 
+                    index: 'bent', 
+                    middle: 'bent', 
+                    ring: 'bent', 
+                    pinky: 'extended', 
+                    palmDirection: 'forward',  // 손바닥이 카메라를 향해야 함
+                    relativePosition: 'specific',  // 새끼손가락만 펴고 나머지는 구부림
+                    description: '새끼손가락만 펴고 손바닥이 보이게 천장을 가리킵니다.' 
+                },
+                
+                'ㅐ': {
+                    thumb: 'bent',
+                    index: 'extended',
+                    middle: 'bent',
+                    ring: 'bent',
+                    pinky: 'extended',
+                    palmDirection: 'forward',
+                    relativePosition: 'specific',
+                    description: ' 검지와 새끼손가락을 펴고 천장을 가리킵니다.'
+                },
+                'ㅔ': {
+                    thumb: 'bent',
+                    index: 'extended',
+                    middle: 'extended',
+                    ring: 'extended',
+                    pinky: 'extended',
+                    palmDirection: 'side',
+                    relativePosition: 'specific',
+                    description: '검지와 새끼손가락을 펴고 앞을 가리킵니다'
+                },
+                'ㅖ': {
+                    thumb: 'bent',
+                    index: 'extended',
+                    middle: 'extended',
+                    ring: 'extended',
+                    pinky: 'extended',
+                    palmDirection: 'side',
+                    relativePosition: 'specific',
+                    description: '검지와 중지, 새끼손가락을 펴고 앞을 가리킵니다'
+                },
+                'ㅢ': {
+                    thumb: 'bent',
+                    index: 'extended',
+                    middle: 'bent',
+                    ring: 'bent',
+                    pinky: 'extended',
+                    palmDirection: 'backward',
+                    relativePosition: 'specific',
+                    description: '검지와 새끼손가락을 펴고 손등이 앞으로 향하게 옆을 가리킵니다 '
+                },
+                'ㅚ': {
+                    thumb: 'bent',
+                    index: 'extended',
+                    middle: 'bent',
+                    ring: 'bent',
+                    pinky: 'extended',
+                    palmDirection: 'backward',
+                    relativePosition: 'specific',
+                    description: '검지와 새끼손가락을 펴고 손등이 앞으로 향하게 천장을 가리킵니다 '
+                },
+                'ㅟ': {
+                    thumb: 'extended',
+                    index: 'bent',
+                    middle: 'extended',
+                    ring: 'extended',
+                    pinky: 'bent',
+                    palmDirection: 'backward',
+                    relativePosition: 'specific',
+                    description: '검지와 새끼손가락을 펴고 손등이 앞으로 향하게 아래를 가리킵니다 '
+                },
+            };
+        }
+
+       
+        async initializeMediaPipe() { this.hands = new Hands({ locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}` }); this.hands.setOptions({ maxNumHands: 1, modelComplexity: 1, minDetectionConfidence: 0.7, minTrackingConfidence: 0.7 }); this.hands.onResults((results) => this.onResults(results)); }
+        setupEventListeners() { this.startBtn.addEventListener('click', () => this.startCamera()); this.stopBtn.addEventListener('click', () => this.stopCamera()); this.practiceBtn.addEventListener('click', () => this.togglePracticeMode()); this.nameInput.addEventListener('input', () => this.onNameInputChange()); this.analyzeBtn.addEventListener('click', () => this.analyzeName()); this.handOptionRadios.forEach(radio => { radio.addEventListener('change', (event) => { this.dominantHand = event.target.value; }); }); }
+        onNameInputChange() { this.analyzeBtn.disabled = !this.nameInput.value.trim(); }
+        analyzeName() { 
+            const name = this.nameInput.value.trim(); 
+            if (!name) return; 
+            
+            this.decomposedSyllables = this.decomposeKoreanName(name); 
+            this.currentSyllableIndex = 0; 
+            this.currentJamoTypeIndex = 0; 
+            this.learnedLetters.clear(); 
+            this.practiceCount = 0; 
+            this.correctCount = 0; 
+            this.displayDecomposedLetters(); 
+            this.updateCurrentLetter(); 
+            document.getElementById('decomposedSection').classList.remove('hidden'); 
+            this.practiceBtn.disabled = !this.isRunning;
+            
+            // 학습 시작 후 레이아웃 변경
+            this.changeLayoutForLearning();
+        }
+        decomposeKoreanName(name) { const syllables = []; const initials = ['ㄱ', 'ㄲ', 'ㄴ', 'ㄷ', 'ㄸ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅃ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅉ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ']; const medials = ['ㅏ', 'ㅐ', 'ㅑ', 'ㅒ', 'ㅓ', 'ㅔ', 'ㅕ', 'ㅖ', 'ㅗ', 'ㅘ', 'ㅙ', 'ㅚ', 'ㅛ', 'ㅜ', 'ㅝ', 'ㅞ', 'ㅟ', 'ㅠ', 'ㅡ', 'ㅢ', 'ㅣ']; const finals = ['', 'ㄱ', 'ㄲ', 'ㄳ', 'ㄴ', 'ㄵ', 'ㄶ', 'ㄷ', 'ㄹ', 'ㄺ', 'ㄻ', 'ㄼ', 'ㄽ', 'ㄾ', 'ㄿ', 'ㅀ', 'ㅁ', 'ㅂ', 'ㅄ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ']; for (let i = 0; i < name.length; i++) { const code = name[i].charCodeAt(0); if (code >= 0xAC00 && code <= 0xD7A3) { const base = code - 0xAC00; const initial = Math.floor(base / 588); const medial = Math.floor((base % 588) / 28); const final = base % 28; const syllableJamos = [initials[initial], medials[medial]]; if (finals[final]) syllableJamos.push(finals[final]); syllables.push({ char: name[i], jamos: syllableJamos, decomposed: `${initials[initial]}${medials[medial]}${finals[final]}` }); } } return syllables; }
+        displayDecomposedLetters() { const container = document.getElementById('decomposedLetters'); container.innerHTML = ''; this.decomposedSyllables.forEach((syllable, index) => { const card = document.createElement('div'); card.className = 'letter-card'; card.id = `syllable-${index}`; card.innerHTML = `<h4>${syllable.char}</h4><p>${syllable.decomposed}</p>`; container.appendChild(card); }); }
+        updateCurrentLetter() { if (this.currentSyllableIndex >= this.decomposedSyllables.length) { document.getElementById('currentLetterDisplay').textContent = '완료!'; document.getElementById('currentLetterName').textContent = '모든 자모음을 학습했습니다!'; document.getElementById('signInstructions').textContent = '축하합니다! 이름을 모두 완성했어요.'; this.hideSignExample(); return; } const currentSyllable = this.decomposedSyllables[this.currentSyllableIndex]; const currentJamo = currentSyllable.jamos[this.currentJamoTypeIndex]; const jamoTypes = ['초성', '중성', '종성']; document.getElementById('currentLetterDisplay').textContent = currentJamo; document.getElementById('currentLetterName').textContent = `${jamoTypes[this.currentJamoTypeIndex]}: ${currentJamo}`; this.updateSignInstructions(currentJamo); document.querySelectorAll('.letter-card').forEach(card => card.classList.remove('current')); document.getElementById(`syllable-${this.currentSyllableIndex}`).classList.add('current'); }
+        updateSignInstructions(letter) { const pattern = this.signPatterns[letter]; if (pattern) { document.getElementById('signInstructions').innerHTML = `<ul><li>${pattern.description}</li></ul>`; this.showSignExample(letter); } else { document.getElementById('signInstructions').innerHTML = '이 자모음의 수화 패턴이 없습니다. 다음으로 넘어갑니다.'; this.hideSignExample(); setTimeout(() => this.nextJamo(), 1500); } }
+        showSignExample(letter) { 
+            const signExample = document.getElementById('signExample'); 
+            const signImageSrc = document.getElementById('signImageSrc');
+            const signImagePlaceholder = document.getElementById('signImagePlaceholder');
+            
+            // 이미지 경로 설정 (images/signs/[자모음].png)
+            const imagePath = `images/signs/${letter}.png`;
+            signImageSrc.src = imagePath;
+            
+            // 이미지 로드 성공 시
+            signImageSrc.onload = () => {
+                signImagePlaceholder.style.display = 'none';
+                signImageSrc.style.display = 'block';
+            };
+            
+            // 이미지 로드 실패 시 (이미지가 없는 경우)
+            signImageSrc.onerror = () => {
+                signImagePlaceholder.style.display = 'flex';
+                signImageSrc.style.display = 'none';
+                signImagePlaceholder.textContent = '이미지 준비 중...';
+            };
+            
+            signExample.classList.remove('hidden'); 
+            signExample.classList.add('fade-in'); 
+        }
+        hideSignExample() { document.getElementById('signExample').classList.add('hidden'); }
+        
+        /**
+         * 학습 시작 후 레이아웃을 변경하는 함수
+         * 이름 입력과 손 선택 섹션을 아래로, 수화 방법 안내를 위로 이동
+         */
+        changeLayoutForLearning() {
+            const rightPanel = document.querySelector('.right-panel');
+            rightPanel.classList.add('learning-started');
+            
+            // 부드러운 애니메이션을 위한 추가 스타일링
+            setTimeout(() => {
+                const inputSection = document.querySelector('.input-section');
+                const handSection = document.querySelector('.hand-option-section');
+                
+                // 입력 섹션 축소
+                inputSection.style.fontSize = '0.9em';
+                inputSection.style.opacity = '0.8';
+                
+                // 손 선택 섹션 축소
+                handSection.style.fontSize = '0.9em';
+                handSection.style.opacity = '0.8';
+            }, 100);
+        }
+        async startCamera() { try { this.startBtn.disabled = true; this.camera = new Camera(this.video, { onFrame: async () => { if (this.hands) await this.hands.send({ image: this.video }); }, width: 500, height: 400 }); await this.camera.start(); this.isRunning = true; this.stopBtn.disabled = false; if (this.decomposedSyllables.length > 0) this.practiceBtn.disabled = false; } catch (error) { console.error('카메라 시작 오류:', error); this.startBtn.disabled = false; } }
+        stopCamera() { 
+            if (this.camera) { this.camera.stop(); this.camera = null; } 
+            this.isRunning = false; 
+            this.isPracticing = false; 
+            this.startBtn.disabled = false; 
+            this.stopBtn.disabled = true; 
+            this.practiceBtn.disabled = true; 
+            this.practiceBtn.textContent = '연습 모드'; 
+            this.practiceBtn.style.background = '#3498db'; 
+            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); 
+            this.hideFeedback();
+            
+            // 카메라 중지 시 배경 애니메이션도 중지
+            this.stopBackgroundAnimation();
+        }
+        togglePracticeMode() { 
+            this.isPracticing = !this.isPracticing; 
+            this.practiceBtn.textContent = this.isPracticing ? '연습 중지' : '연습 시작'; 
+            this.practiceBtn.style.background = this.isPracticing ? '#e74c3c' : '#2980b9'; 
+            document.getElementById('gestureStatus').classList.toggle('hidden', !this.isPracticing); 
+            
+            // 연습 모드 시작/중지에 따라 배경 애니메이션 제어
+            if (this.isPracticing) {
+                this.startBackgroundAnimation();
+            } else {
+                this.stopBackgroundAnimation();
+                this.hideFeedback();
+            }
+        }
+        showFeedback(message, type) { const feedback = document.getElementById('feedback'); feedback.textContent = message; feedback.className = `feedback ${type} fade-in`; feedback.classList.remove('hidden'); }
+        hideFeedback() { document.getElementById('feedback').classList.add('hidden'); }
+        nextJamo() { 
+            const currentSyllable = this.decomposedSyllables[this.currentSyllableIndex]; 
+            if (this.currentJamoTypeIndex >= currentSyllable.jamos.length - 1) { 
+                document.getElementById(`syllable-${this.currentSyllableIndex}`).classList.add('completed'); 
+                this.currentSyllableIndex++; 
+                this.currentJamoTypeIndex = 0; 
+                
+                // 모든 자모음 학습 완료 확인
+                if (this.currentSyllableIndex >= this.decomposedSyllables.length) {
+                    this.showCompletion();
+                    return;
+                }
+            } else { 
+                this.currentJamoTypeIndex++; 
+            } 
+            this.updateCurrentLetter(); 
+            this.hideFeedback();
+            
+            // 자모음이 변경되면 배경 이미지도 업데이트
+            if (this.isPracticing) {
+                this.updateBackgroundSigns();
+            }
+        }
+        showCompletion() {
+            // 학습 완료 섹션 표시
+            document.getElementById('completionSection').classList.remove('hidden');
+            document.getElementById('completedName').textContent = this.userName;
+            
+            // 연습 모드 중지
+            if (this.isPracticing) {
+                this.togglePracticeMode();
+            }
+            
+            // 이벤트 리스너 추가
+            document.getElementById('reviewBtn').onclick = () => this.startReview();
+            document.getElementById('homeBtn').onclick = () => this.goHome();
+        }
+        
+        startReview() {
+            // 복습 모드 시작 - 처음부터 다시 시작
+            this.currentSyllableIndex = 0;
+            this.currentJamoTypeIndex = 0;
+            this.learnedLetters.clear();
+            this.correctCount = 0;
+            
+            // 완료 섹션 숨기기
+            document.getElementById('completionSection').classList.add('hidden');
+            
+            // 현재 자모음 업데이트
+            this.updateCurrentLetter();
+            
+            // 연습 모드 시작
+            if (!this.isPracticing) {
+                this.togglePracticeMode();
+            }
+        }
+        
+        goHome() {
+            // 처음 화면으로 돌아가기
+            this.stopCamera();
+            
+            // 모든 섹션 초기화
+            document.getElementById('completionSection').classList.add('hidden');
+            document.getElementById('decomposedSection').classList.add('hidden');
+            document.getElementById('signExample').classList.add('hidden');
+            
+            // 입력 필드 초기화
+            document.getElementById('nameInput').value = '';
+            document.getElementById('nameInput').disabled = false;
+            document.getElementById('analyzeBtn').disabled = false;
+            
+            // 손 선택 초기화
+            const handOptions = document.querySelectorAll('input[name="handPreference"]');
+            handOptions.forEach(option => option.checked = false);
+            
+            // 레이아웃 초기화
+            const rightPanel = document.querySelector('.right-panel');
+            rightPanel.classList.remove('learning-started');
+            
+            // 학습 상태 초기화
+            this.userName = '';
+            this.decomposedSyllables = [];
+            this.currentSyllableIndex = 0;
+            this.currentJamoTypeIndex = 0;
+            this.learnedLetters.clear();
+            this.correctCount = 0;
+            this.practiceCount = 0;
+            
+            // 안내 메시지 초기화
+            document.getElementById('signInstructions').textContent = '이름을 입력하고 분석하기 버튼을 눌러주세요.';
+        }
+        
+       
+        calculatePalmNormal(landmarks) {
+            const p0 = landmarks[0]; // Wrist
+            const p5 = landmarks[5]; // Index finger MCP
+            const p17 = landmarks[17]; // Pinky MCP
+
+            // Create two vectors on the plane of the palm
+            const v1 = { x: p5.x - p0.x, y: p5.y - p0.y, z: p5.z - p0.z };
+            const v2 = { x: p17.x - p0.x, y: p17.y - p0.y, z: p17.z - p0.z };
+
+            // Calculate the cross product to get the normal vector
+            const normal = {
+                x: v1.y * v2.z - v1.z * v2.y,
+                y: v1.z * v2.x - v1.x * v2.z,
+                z: v1.x * v2.y - v1.y * v2.x
+            };
+
+            // Normalize the vector (make its length 1)
+            const magnitude = Math.sqrt(normal.x * normal.x + normal.y * normal.y + normal.z * normal.z);
+            normal.x /= magnitude;
+            normal.y /= magnitude;
+            normal.z /= magnitude;
+
+            return normal;
+        }
+
+        onResults(results) {
+            this.canvas.width = this.video.videoWidth;
+            this.canvas.height = this.video.videoHeight;
+            this.ctx.save();
+            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+            if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
+                const landmarks = results.multiHandLandmarks[0];
+                drawConnectors(this.ctx, landmarks, HAND_CONNECTIONS, { color: '#00FF00', lineWidth: 5 });
+                drawLandmarks(this.ctx, landmarks, { color: '#FF0000', lineWidth: 2 });
+                
+                if (this.isPracticing && this.decomposedSyllables.length > 0) {
+                    const now = Date.now();
+                    if (now - this.lastGestureTime > this.gestureDebounceTime) {
+                        this.processGesture(landmarks);
+                        this.lastGestureTime = now;
+                    }
+                }
+                document.getElementById('gestureStatus').textContent = '손 모양을 만들어주세요!';
+            } else if(this.isPracticing) {
+                document.getElementById('gestureStatus').textContent = '카메라에 손이 보이도록 해주세요.';
+            }
+            this.ctx.restore();
+        }
+        
+        processGesture(landmarks) {
+            if (this.currentSyllableIndex >= this.decomposedSyllables.length) return;
+            
+            // 정답 처리 중이면 새로운 제스처 인식하지 않음
+            if (this.isProcessingCorrect) return;
+
+            const currentJamo = this.decomposedSyllables[this.currentSyllableIndex].jamos[this.currentJamoTypeIndex];
+            const targetPattern = this.signPatterns[currentJamo];
+            if (!targetPattern) return;
+
+            const currentPattern = this.analyzeHandPattern(landmarks);
+            
+            // 디버깅: 현재 손 인식 상태 출력
+            console.log('=== 손 인식 디버깅 ===');
+            console.log('현재 자모음:', currentJamo);
+            console.log('목표 패턴:', targetPattern);
+            console.log('현재 패턴:', currentPattern);
+            
+            // 1단계: 손가락 모양 검사
+            let isShapeCorrect = Object.keys(targetPattern).every(finger => 
+                finger === 'description' || finger === 'palmDirection' || finger === 'relativePosition' || 
+                targetPattern[finger] === currentPattern[finger]
+            );
+            console.log('1단계 - 손가락 모양 검사:', isShapeCorrect);
+
+            // 2단계: 손바닥 방향 검사 (정확도 향상을 위해 비활성화)
+            let palmDirectionCorrect = true;
+            console.log('2단계 - 손바닥 방향 검사: 비활성화됨 (요구:', targetPattern.palmDirection, ')');
+
+            // 3단계: 손가락 상대 위치 검사 (새로운 기능)
+            let relativePositionCorrect = true;
+            if (isShapeCorrect && targetPattern.relativePosition && targetPattern.relativePosition !== 'any') {
+                relativePositionCorrect = this.checkRelativePosition(landmarks, targetPattern.relativePosition);
+                console.log('3단계 - 손가락 상대 위치 검사:', relativePositionCorrect, '(요구:', targetPattern.relativePosition, ')');
+                if (!relativePositionCorrect) {
+                    isShapeCorrect = false;
+                }
+            }
+            
+            console.log('최종 결과:', isShapeCorrect ? '정답' : '오답');
+            console.log('========================');
+
+            this.practiceCount++;
+            if (isShapeCorrect) {
+                this.isProcessingCorrect = true; // 정답 처리 시작
+                this.showFeedback('정확합니다! 👍', 'correct');
+                this.learnedLetters.add(currentJamo);
+                this.correctCount++;
+                // 정답 메시지를 2초간 보여주고 다음 자모음으로 넘어감
+                setTimeout(() => { 
+                    this.hideFeedback();
+                    setTimeout(() => { 
+                        this.nextJamo();
+                        this.isProcessingCorrect = false; // 정답 처리 완료
+                    }, 500); // 추가로 0.5초 대기
+                }, 2000);
+            } else {
+                this.showFeedback('모양이나 방향이 달라요. 다시 시도해 보세요.', 'incorrect');
+            }
+        }
+
+        analyzeHandPattern(landmarks) {
+            return {
+                thumb: this.getThumbState(landmarks),
+                index: this.getFingerState(landmarks, 8, 6),
+                middle: this.getFingerState(landmarks, 12, 10),
+                ring: this.getFingerState(landmarks, 16, 14),
+                pinky: this.getFingerState(landmarks, 20, 18)
+            };
+        }
+
+        getFingerState(landmarks, tipIndex, dipIndex) {
+            const tipY = landmarks[tipIndex].y;
+            const dipY = landmarks[dipIndex].y;
+            const mcpY = landmarks[dipIndex - 1].y; // MCP 관절 (손바닥과 연결되는 관절)
+            
+            // 손가락 끝이 DIP 관절보다 위에 있으면 펴진 상태
+            if (tipY < dipY - 0.02) {
+                return 'extended';
+            }
+            // 손가락 끝이 MCP 관절보다 아래에 있으면 구부러진 상태
+            else if (tipY > mcpY + 0.02) {
+                return 'bent';
+            }
+            // 그 사이에 있으면 펴진 상태로 간주 (halfbent 제거)
+            else {
+                return 'extended';
+            }
+        }
+
+        getThumbState(landmarks) {
+            const thumbTip = landmarks[4]; // 엄지 끝
+            const indexMcp = landmarks[5]; // 검지 MCP 관절 (검지 시작점)
+            const middleMcp = landmarks[9]; // 중지 MCP 관절
+            const ringMcp = landmarks[13]; // 약지 MCP 관절
+            const pinkyMcp = landmarks[17]; // 새끼손가락 MCP 관절
+            
+            // 디버깅: 엄지 상태 정보 출력
+            console.log('엄지 디버깅:', {
+                thumbTipX: thumbTip.x.toFixed(3), thumbTipY: thumbTip.y.toFixed(3),
+                indexMcpX: indexMcp.x.toFixed(3), indexMcpY: indexMcp.y.toFixed(3),
+                dominantHand: this.dominantHand
+            });
+            
+            // 엄지 끝이 검지 시작점(MCP)에 가까운지 확인
+            const distanceToIndexMcp = Math.sqrt(
+                Math.pow(thumbTip.x - indexMcp.x, 2) + 
+                Math.pow(thumbTip.y - indexMcp.y, 2)
+            );
+            
+            // 엄지 끝이 검지 시작점에 가까우면 구부러진 상태
+            if (distanceToIndexMcp < 0.08) {
+                console.log('엄지 상태: bent (검지 MCP과의 거리:', distanceToIndexMcp.toFixed(3), ')');
+                return 'bent';
+            } else {
+                console.log('엄지 상태: extended (검지 MCP과의 거리:', distanceToIndexMcp.toFixed(3), ')');
+                return 'extended';
+            }
+        }
+
+        /**
+         * 손바닥 방향 검사 함수
+         * @param {Array} landmarks - MediaPipe 손 랜드마크 배열
+         * @param {string} requiredDirection - 요구되는 방향 ('forward', 'backward', 'side', 'up', 'down')
+         * @returns {boolean} - 방향이 올바른지 여부
+         * 
+         * 작동 방식:
+         * 1. calculatePalmNormal()로 손바닥의 법선벡터 계산
+         * 2. 법선벡터의 x, y, z 성분을 분석하여 방향 판별
+         * 3. threshold 값을 사용하여 방향의 정확도 조절
+         */
+        checkPalmDirection(landmarks, requiredDirection) {
+            const normal = this.calculatePalmNormal(landmarks);
+            const threshold = 0.5; // 방향 판별 임계값 (낮을수록 엄격)
+
+            // 디버깅: 손바닥 방향 정보 출력
+            console.log('손바닥 법선벡터:', { x: normal.x.toFixed(3), y: normal.y.toFixed(3), z: normal.z.toFixed(3) });
+            console.log('주 사용 손:', this.dominantHand);
+
+            let result = false;
+            switch (requiredDirection) {
+                case 'forward':
+                    // 손바닥이 카메라를 향함 (법선벡터가 카메라 반대 방향)
+                    result = (this.dominantHand === 'right') ? 
+                        (normal.x < -threshold) : (normal.x > threshold);
+                    console.log('forward 검사:', result, '(normal.x:', normal.x.toFixed(3), ', threshold:', threshold, ')');
+                    break;
+                
+                case 'backward':
+                    // 손등이 카메라를 향함 (법선벡터가 카메라 방향)
+                    result = (this.dominantHand === 'right') ? 
+                        (normal.x > threshold) : (normal.x < -threshold);
+                    console.log('backward 검사:', result, '(normal.x:', normal.x.toFixed(3), ', threshold:', threshold, ')');
+                    break;
+                
+                case 'side':
+                    // 손의 옆면이 카메라를 향함 (법선벡터의 x성분이 작음)
+                    result = Math.abs(normal.x) < threshold;
+                    console.log('side 검사:', result, '(|normal.x|:', Math.abs(normal.x).toFixed(3), ', threshold:', threshold, ')');
+                    break;
+                
+                case 'up':
+                    // 손바닥이 위를 향함 (법선벡터의 y성분이 음수)
+                    result = normal.y < -threshold;
+                    console.log('up 검사:', result, '(normal.y:', normal.y.toFixed(3), ', threshold:', threshold, ')');
+                    break;
+                
+                case 'down':
+                    // 손바닥이 아래를 향함 (법선벡터의 y성분이 양수)
+                    result = normal.y > threshold;
+                    console.log('down 검사:', result, '(normal.y:', normal.y.toFixed(3), ', threshold:', threshold, ')');
+                    break;
+                
+                default:
+                    result = true; // 'any' 또는 알 수 없는 방향
+                    console.log('any 방향:', result);
+            }
+            
+            return result;
+        }
+
+        /**
+         * 손가락 상대 위치 검사 함수
+         * @param {Array} landmarks - MediaPipe 손 랜드마크 배열
+         * @param {string} requiredPosition - 요구되는 상대 위치 ('straight', 'spread', 'closed', 'specific')
+         * @returns {boolean} - 상대 위치가 올바른지 여부
+         * 
+         * 작동 방식:
+         * 1. 손가락 끝점들(landmarks 4, 8, 12, 16, 20)의 좌표 추출
+         * 2. 손가락들 간의 거리와 각도 계산
+         * 3. 패턴별로 다른 기준 적용
+         */
+        checkRelativePosition(landmarks, requiredPosition) {
+            const fingerTips = [4, 8, 12, 16, 20]; // 엄지, 검지, 중지, 약지, 새끼손가락 끝
+            const fingerPositions = fingerTips.map(i => landmarks[i]);
+
+            switch (requiredPosition) {
+                case 'straight':
+                    // 손가락들이 일직선상에 배치됨 (옆모습에서 주로 나타남)
+                    return this.checkFingerAlignment(fingerPositions);
+                
+                case 'spread':
+                    // 손가락들이 벌어져 있음
+                    return this.checkFingerSpread(fingerPositions);
+                
+                case 'closed':
+                    // 손가락들이 모여있음
+                    return this.checkFingerClosed(fingerPositions);
+                
+                case 'specific':
+                    // 특정 패턴 (각 자모음별로 개별 검사)
+                    return this.checkSpecificPattern(landmarks, fingerPositions);
+                
+                default:
+                    return true; // 'any' 또는 알 수 없는 패턴
+            }
+        }
+
+        /**
+         * 손가락들이 일직선상에 배치되었는지 검사
+         * 옆모습에서 손가락 끝점들이 거의 일직선상에 있을 때 true
+         */
+        checkFingerAlignment(fingerPositions) {
+            // 손가락 끝점들의 y좌표가 비슷한지 확인 (수평선상 배치)
+            const yPositions = fingerPositions.map(pos => pos.y);
+            const yVariance = this.calculateVariance(yPositions);
+            return yVariance < 0.01; // 임계값 조정 가능
+        }
+
+        /**
+         * 손가락들이 벌어져 있는지 검사
+         * 펴진 손가락들만 고려하여 벌어져 있는지 확인
+         */
+        checkFingerSpread(fingerPositions) {
+            if (this.currentSyllableIndex >= this.decomposedSyllables.length) return true;
+            
+            const currentJamo = this.decomposedSyllables[this.currentSyllableIndex].jamos[this.currentJamoTypeIndex];
+            const targetPattern = this.signPatterns[currentJamo];
+            
+            if (!targetPattern) return true;
+            
+            // 펴진 손가락들만 추출
+            const extendedFingers = [];
+            const fingerIndices = [4, 8, 12, 16, 20]; // 엄지, 검지, 중지, 약지, 새끼손가락 끝
+            const fingerNames = ['thumb', 'index', 'middle', 'ring', 'pinky'];
+            
+            for (let i = 0; i < fingerNames.length; i++) {
+                const fingerName = fingerNames[i];
+                const fingerState = targetPattern[fingerName];
+                
+                // 펴진 손가락만 포함 (extended)
+                if (fingerState === 'extended') {
+                    extendedFingers.push(fingerPositions[i]);
+                }
+            }
+            
+            // 펴진 손가락이 2개 미만이면 spread 검사 불필요
+            if (extendedFingers.length < 2) {
+                return true;
+            }
+            
+            // 펴진 손가락들 간의 평균 거리 계산
+            const distances = [];
+            for (let i = 0; i < extendedFingers.length - 1; i++) {
+                const dist = this.calculateDistance(extendedFingers[i], extendedFingers[i + 1]);
+                distances.push(dist);
+            }
+            
+            const avgDistance = distances.reduce((sum, dist) => sum + dist, 0) / distances.length;
+            return avgDistance > 0.05; // 임계값 조정 가능
+        }
+
+        /**
+         * 손가락들이 모여있는지 검사
+         * 펴진 손가락들만 고려하여 모여있는지 확인
+         */
+        checkFingerClosed(fingerPositions) {
+            if (this.currentSyllableIndex >= this.decomposedSyllables.length) return true;
+            
+            const currentJamo = this.decomposedSyllables[this.currentSyllableIndex].jamos[this.currentJamoTypeIndex];
+            const targetPattern = this.signPatterns[currentJamo];
+            
+            if (!targetPattern) return true;
+            
+            // 펴진 손가락들만 추출
+            const extendedFingers = [];
+            const fingerIndices = [4, 8, 12, 16, 20]; // 엄지, 검지, 중지, 약지, 새끼손가락 끝
+            const fingerNames = ['thumb', 'index', 'middle', 'ring', 'pinky'];
+            
+            for (let i = 0; i < fingerNames.length; i++) {
+                const fingerName = fingerNames[i];
+                const fingerState = targetPattern[fingerName];
+                
+                // 펴진 손가락만 포함 (extended)
+                if (fingerState === 'extended') {
+                    extendedFingers.push(fingerPositions[i]);
+                }
+            }
+            
+            // 펴진 손가락이 2개 미만이면 closed 검사 불필요
+            if (extendedFingers.length < 2) {
+                return true;
+            }
+            
+            // 펴진 손가락들 간의 평균 거리 계산
+            const distances = [];
+            for (let i = 0; i < extendedFingers.length - 1; i++) {
+                const dist = this.calculateDistance(extendedFingers[i], extendedFingers[i + 1]);
+                distances.push(dist);
+            }
+            
+            const avgDistance = distances.reduce((sum, dist) => sum + dist, 0) / distances.length;
+            return avgDistance < 0.08; // 임계값을 0.03에서 0.08로 증가 (더 관대하게)
+        }
+
+        /**
+         * 특정 패턴 검사 (각 자모음별 개별 로직)
+         * 현재는 정확도 향상을 위해 비활성화됨
+         */
+        checkSpecificPattern(landmarks, fingerPositions) {
+            // specific 패턴 검사를 비활성화하여 정확도 향상
+            return true;
+        }
+
+        /**
+         * 엄지와 검지 끝이 만나서 동그라미를 형성하는지 검사
+         */
+        checkThumbIndexTouch(landmarks) {
+            const thumbTip = landmarks[4];  // 엄지 끝
+            const indexTip = landmarks[8]; // 검지 끝
+            const distance = this.calculateDistance(thumbTip, indexTip);
+            return distance < 0.02; // 임계값: 매우 가까워야 함
+        }
+
+        /**
+         * 모든 손가락을 반만 접고 있는지 검사
+         */
+        checkAllHalfBent(landmarks) {
+            const thumbState = this.getThumbState(landmarks);
+            const indexState = this.getFingerState(landmarks, 8, 6);
+            const middleState = this.getFingerState(landmarks, 12, 10);
+            const ringState = this.getFingerState(landmarks, 16, 14);
+            const pinkyState = this.getFingerState(landmarks, 20, 18);
+            
+            // 모든 손가락이 halfbent 상태여야 함
+            return thumbState === 'extended' && 
+                   indexState === 'halfbent' && 
+                   middleState === 'halfbent' && 
+                   ringState === 'halfbent' && 
+                   pinkyState === 'halfbent';
+        }
+
+        /**
+         * 새끼손가락만 구부린채로 나머지 손가락을 펴는지 검사
+         */
+        checkAllExceptPinky(landmarks) {
+            const thumbState = this.getThumbState(landmarks);
+            const indexState = this.getFingerState(landmarks, 8, 6);
+            const middleState = this.getFingerState(landmarks, 12, 10);
+            const ringState = this.getFingerState(landmarks, 16, 14);
+            const pinkyState = this.getFingerState(landmarks, 20, 18);
+            
+            // 새끼손가락은 구부려야 하고, 나머지는 펴져야 함
+            return (thumbState === 'extended') && 
+                   (indexState === 'extended' || indexState === 'extended') && 
+                   (middleState === 'extended' || middleState === 'extended') && 
+                   (ringState === 'extended' || ringState === 'extended') && 
+                   (pinkyState === 'bent' || pinkyState === 'extended');
+        }
+
+        /**
+         * 검지, 중지, 약지를 펴고 중지와 약지는 붙인 상태인지 검사
+         */
+        checkIndexMiddleRingClose(landmarks) {
+            const indexState = this.getFingerState(landmarks, 8, 6);
+            const middleState = this.getFingerState(landmarks, 12, 10);
+            const ringState = this.getFingerState(landmarks, 16, 14);
+            const thumbState = this.getThumbState(landmarks);
+            const pinkyState = this.getFingerState(landmarks, 20, 18);
+            
+            // 검지, 중지, 약지는 펴져야 하고, 엄지와 새끼손가락은 구부려야 함
+            const fingersCorrect = (indexState === 'extended' || indexState === 'extended') && 
+                                  (middleState === 'extended' || middleState === 'extended') && 
+                                  (ringState === 'extended' || ringState === 'extended') && 
+                                  (thumbState === 'bent') && 
+                                  (pinkyState === 'bent' || pinkyState === 'extended');
+            
+            if (!fingersCorrect) return false;
+            
+            // 중지와 약지가 붙어있는지 추가 검사
+            const middleTip = landmarks[12];
+            const ringTip = landmarks[16];
+            const distance = this.calculateDistance(middleTip, ringTip);
+            return distance < 0.03; // 중지와 약지가 가까이 붙어있어야 함
+        }
+
+
+        /**
+         * 검지와 엄지만 펴고 나머지는 구부린 상태인지 검사
+         */
+        checkIndexThumbOnly(landmarks) {
+            const indexState = this.getFingerState(landmarks, 8, 6);
+            const thumbState = this.getThumbState(landmarks);
+            const middleState = this.getFingerState(landmarks, 12, 10);
+            const ringState = this.getFingerState(landmarks, 16, 14);
+            const pinkyState = this.getFingerState(landmarks, 20, 18);
+            
+            // 검지와 엄지는 펴져야 하고, 나머지는 구부러져야 함
+            return (indexState === 'extended' || indexState === 'extended') && 
+                   (thumbState === 'extended' || thumbState === 'extended') && 
+                   (middleState === 'bent' || middleState === 'extended') && 
+                   (ringState === 'bent' || ringState === 'extended') && 
+                   (pinkyState === 'bent' || pinkyState === 'extended');
+        }
+
+        /**
+         * 검지와 중지만 펴고 나머지는 구부린 상태인지 검사
+         */
+        checkIndexMiddleOnly(landmarks) {
+            const indexState = this.getFingerState(landmarks, 8, 6);
+            const middleState = this.getFingerState(landmarks, 12, 10);
+            const thumbState = this.getThumbState(landmarks);
+            const ringState = this.getFingerState(landmarks, 16, 14);
+            const pinkyState = this.getFingerState(landmarks, 20, 18);
+            
+            // 검지와 중지는 펴져야 하고, 나머지는 구부러져야 함
+            return (indexState === 'extended' || indexState === 'extended') && 
+                   (middleState === 'extended' || middleState === 'extended') && 
+                   (thumbState === 'bent') && 
+                   (ringState === 'bent' || ringState === 'extended') && 
+                   (pinkyState === 'bent' || pinkyState === 'extended');
+        }
+
+        /**
+         * 새끼손가락만 펴고 나머지는 구부린 상태인지 검사
+         */
+        checkPinkyOnly(landmarks) {
+            const pinkyState = this.getFingerState(landmarks, 20, 18);
+            const thumbState = this.getThumbState(landmarks);
+            const indexState = this.getFingerState(landmarks, 8, 6);
+            const middleState = this.getFingerState(landmarks, 12, 10);
+            const ringState = this.getFingerState(landmarks, 16, 14);
+            
+            // 새끼손가락은 펴져야 하고, 나머지는 구부러져야 함
+            return (pinkyState === 'extended' || pinkyState === 'extended') && 
+                   (thumbState === 'bent') && 
+                   (indexState === 'bent' || indexState === 'extended') && 
+                   (middleState === 'bent' || middleState === 'extended') && 
+                   (ringState === 'bent' || ringState === 'extended');
+        }
+
+        /**
+         * 검지만 펴고 나머지는 구부린 상태인지 검사
+         */
+        checkIndexOnly(landmarks) {
+            const indexState = this.getFingerState(landmarks, 8, 6);
+            const thumbState = this.getThumbState(landmarks);
+            const middleState = this.getFingerState(landmarks, 12, 10);
+            const ringState = this.getFingerState(landmarks, 16, 14);
+            const pinkyState = this.getFingerState(landmarks, 20, 18);
+            
+            // 검지는 펴져야 하고, 나머지는 구부러져야 함
+            return (indexState === 'extended' || indexState === 'extended') && 
+                   (thumbState === 'bent') && 
+                   (middleState === 'bent' || middleState === 'extended') && 
+                   (ringState === 'bent' || ringState === 'extended') && 
+                   (pinkyState === 'bent' || pinkyState === 'extended');
+        }
+
+        /**
+         * 엄지만 펴고 나머지는 구부린 상태인지 검사
+         */
+        checkThumbOnly(landmarks) {
+            const thumbState = this.getThumbState(landmarks);
+            const indexState = this.getFingerState(landmarks, 8, 6);
+            const middleState = this.getFingerState(landmarks, 12, 10);
+            const ringState = this.getFingerState(landmarks, 16, 14);
+            const pinkyState = this.getFingerState(landmarks, 20, 18);
+            
+            // 엄지는 펴져야 하고, 나머지는 구부러져야 함
+            return (thumbState === 'extended') && 
+                   (indexState === 'bent' || indexState === 'extended') && 
+                   (middleState === 'bent' || middleState === 'extended') && 
+                   (ringState === 'bent' || ringState === 'extended') && 
+                   (pinkyState === 'bent' || pinkyState === 'extended');
+        }
+
+        /**
+         * 엄지와 검지만 펴고 나머지는 구부린 상태인지 검사
+         */
+        checkThumbIndexOnly(landmarks) {
+            const thumbState = this.getThumbState(landmarks);
+            const indexState = this.getFingerState(landmarks, 8, 6);
+            const middleState = this.getFingerState(landmarks, 12, 10);
+            const ringState = this.getFingerState(landmarks, 16, 14);
+            const pinkyState = this.getFingerState(landmarks, 20, 18);
+            
+            // 엄지와 검지는 펴져야 하고, 나머지는 구부러져야 함
+            return (thumbState === 'extended') && 
+                   (indexState === 'extended' || indexState === 'extended') && 
+                   (middleState === 'bent' || middleState === 'extended') && 
+                   (ringState === 'bent' || ringState === 'extended') && 
+                   (pinkyState === 'bent' || pinkyState === 'extended');
+        }
+
+        /**
+         * 두 점 간의 거리 계산
+         */
+        calculateDistance(point1, point2) {
+            const dx = point1.x - point2.x;
+            const dy = point1.y - point2.y;
+            const dz = point1.z - point2.z;
+            return Math.sqrt(dx * dx + dy * dy + dz * dz);
+        }
+
+        /**
+         * 배열의 분산 계산
+         */
+        calculateVariance(values) {
+            const mean = values.reduce((sum, val) => sum + val, 0) / values.length;
+            const variance = values.reduce((sum, val) => sum + Math.pow(val - mean, 2), 0) / values.length;
+            return variance;
+        }
+
+        /**
+         * 배경 수화 이미지 애니메이션 시작
+         */
+        startBackgroundAnimation() {
+            // 기존 애니메이션 정리
+            this.stopBackgroundAnimation();
+            
+            // 20개의 배경 수화 이미지 생성
+            this.createBackgroundSigns();
+            
+            // 2초마다 새로운 이미지가 나타나도록 설정
+            this.backgroundAnimationInterval = setInterval(() => {
+                this.showRandomBackgroundSign();
+            }, 2000);
+        }
+
+        /**
+         * 배경 수화 이미지 애니메이션 중지
+         */
+        stopBackgroundAnimation() {
+            if (this.backgroundAnimationInterval) {
+                clearInterval(this.backgroundAnimationInterval);
+                this.backgroundAnimationInterval = null;
+            }
+            
+            // 모든 배경 이미지 제거
+            this.backgroundSignsContainer.innerHTML = '';
+            this.backgroundSigns = [];
+        }
+
+        /**
+         * 20개의 배경 수화 이미지 요소 생성 (현재 연습 중인 수화로)
+         */
+        createBackgroundSigns() {
+            // 현재 연습 중인 수화 가져오기
+            if (this.currentSyllableIndex >= this.decomposedSyllables.length) return;
+            
+            const currentJamo = this.decomposedSyllables[this.currentSyllableIndex].jamos[this.currentJamoTypeIndex];
+            const imagePath = `images/signs/${currentJamo}.png`;
+            
+            for (let i = 0; i < 20; i++) {
+                const signElement = document.createElement('div');
+                signElement.className = 'background-sign';
+                
+                // 현재 연습 중인 수화 이미지 사용
+                const img = document.createElement('img');
+                img.src = imagePath;
+                img.alt = `수화 ${currentJamo}`;
+                
+                // 이미지 로드 실패 시 기본 텍스트 표시
+                img.onerror = () => {
+                    signElement.innerHTML = `<div style="display: flex; align-items: center; justify-content: center; height: 100%; font-size: 24px; color: #666;">${currentJamo}</div>`;
+                };
+                
+                signElement.appendChild(img);
+                
+                // 랜덤한 위치 설정 (화면 경계를 고려)
+                const x = Math.random() * (window.innerWidth - 80);
+                const y = Math.random() * (window.innerHeight - 80);
+                signElement.style.left = `${x}px`;
+                signElement.style.top = `${y}px`;
+                
+                this.backgroundSignsContainer.appendChild(signElement);
+                this.backgroundSigns.push(signElement);
+            }
+        }
+
+        /**
+         * 동시다발적으로 배경 수화 이미지들을 나타나게 함
+         */
+        showRandomBackgroundSign() {
+            if (this.backgroundSigns.length === 0) return;
+            
+            // 보이지 않는 이미지들 중에서 랜덤하게 15-20개 선택
+            const hiddenSigns = this.backgroundSigns.filter(sign => !sign.classList.contains('fade-in'));
+            const numToShow = Math.min(15 + Math.floor(Math.random() * 6), hiddenSigns.length); // 15-20개
+            
+            // 랜덤하게 선택된 이미지들을 동시에 나타나게 함
+            for (let i = 0; i < numToShow; i++) {
+                const randomIndex = Math.floor(Math.random() * hiddenSigns.length);
+                const selectedSign = hiddenSigns[randomIndex];
+                
+                // 선택된 이미지를 배열에서 제거하여 중복 방지
+                hiddenSigns.splice(randomIndex, 1);
+                
+                selectedSign.classList.add('fade-in');
+                
+                // 3초 후에 사라지게 함
+                setTimeout(() => {
+                    selectedSign.classList.remove('fade-in');
+                    selectedSign.classList.add('fade-out');
+                    
+                    // 페이드 아웃 완료 후 클래스 정리
+                    setTimeout(() => {
+                        selectedSign.classList.remove('fade-out');
+                    }, 2000);
+                }, 3000);
+            }
+        }
+
+        /**
+         * 현재 연습 중인 자모음에 맞게 배경 이미지 업데이트
+         */
+        updateBackgroundSigns() {
+            // 기존 배경 이미지들 제거
+            this.backgroundSignsContainer.innerHTML = '';
+            this.backgroundSigns = [];
+            
+            // 새로운 배경 이미지들 생성
+            this.createBackgroundSigns();
+        }
+    }
+    
+    document.addEventListener('DOMContentLoaded', () => new KoreanSignLanguageLearner());
+</script>
+</body>
+</html>
